@@ -1,7 +1,7 @@
 
     
 $("body").css("background-image", "url('assets/images/trivia.jpg')", "height:900px", "width: 900px");
-$(".container").css("background-image", "url('assets/images/tri2.jpg')");
+$(".container").css("background-image", "url('assets/images/tr.jpg')");
 $('#reset_button').hide();
 var Trivia;
 
@@ -19,19 +19,19 @@ $('#choices_div').on('click', 'button', function(e) {
         index = l.questions[l.current].correct,  //correct answer index
         correct = l.questions[l.current].choices[index]; //correct answer in choise is the same but oe ssays olace the other the number
 if (userPick === index) {
-        $('#choices_div').text(" Correct!!! The correct answer was: "+ correct);
+        $('#choices_div').text(" Correct!!! The correct answer was!!!!!!: "+ correct).css("color", "blue");
         l.answer(true);
        
     } else {
-        $('#choices_div').text("Wrong Answer! The correct answer was: " + correct);
+        $('#choices_div').text("Wrong Answer! The correct answer was: " + correct).css("color", "red");
         l.answer(false);
     }
     l.nextQ();
 });
 
-
+//make a prototype
    $.fn.trivia = function() {
- //setting a variable in the global scope to reference to multiple elements with this chaning value but nebver l
+ //setting a object = this in the global scope to reference to multiple elements with this chaning value but nebver l
 
     var l = this;
    
@@ -49,27 +49,27 @@ if (userPick === index) {
     l.questions = [{
         question: "how many stars are in the U.S flag",
         choices: ["30", "20", "50", "10"],
-        images: ["../images/Rajah.gif"],
+        images: ["assets/images/flag.png"],
         correct: 2
     }, {
         question: " whats the speed of light aprox?",
-        choices: ["10 kmph", "100000 kmph", "only god knows", "350000 kmps"],
+        choices: ["10 kmph", "100,000 kmph", "only god knows!", "350,000 kmph"],
         correct: 3
 
     }, {
-        question: "Who was the 5th U>S president?",
+        question: "Who was the 5th US president?",
         choices: ["Abraham Lincoln", "Forrest Blanton", "Donald Reagan", "Obama"],
         correct: 0
 
     }, {
-        question: "In Beauty and the Beast, how many eggs does Gaston eat for    breakfast?",
-        choices: ["2 Dozen", "5 Dozen", "5000", "0"],
-        correct: 1
+        question: "what wa Albert Einstein Nacionality?",
+        choices: ["Canadian", "Russian", "American", "German"],
+        correct: 3
 
     }, {
-        question: "In Alice in Wonderland, what is the name of Alice’s kitten?",
-        choices: ["Dinah", "Sammie", "Kat", "Luna"],
-        correct: 0
+        question: "what was the real reason the Constitution was made?",
+        choices: ["to give you liberty", "to make laws", "as a contranct between man and goverment", "no idea"],
+        correct: 2
 
     }, {
         question: "After being on earth, where did Hercules first meet his   father Zeus?",
@@ -112,8 +112,6 @@ if (userPick === index) {
                 class: 'result'
             }));
             $('#reset_button').show();
-            
-            //$('#start_button').text('Restart').appendTo('.container').show();
         }
         $('#reset_button').on('click',function(restart) {
             window.location.reload();
@@ -153,12 +151,14 @@ if (userPick === index) {
         $('.correct').html('Correct answers:  ' + l.answers.correct);
         $('.incorrect').html('Incorrect answers: ' + l.answers.incorrect);
     };
-    console.log(l.cleanUp);
+    
    // set a variabl = to either correct or incorrect the create an object
     l.answer = function(result) {
         var guess =  result ? 'correct' : 'incorrect';
-        l.answers[guess]++;
+        l.answers[guess]++;//add wrong or right wetger answer is false or truth
         $('.' + guess).text(guess + ' answers: ' + l.answers[guess]);
+        
+    console.log(result);
     };
     return l;//
 };
