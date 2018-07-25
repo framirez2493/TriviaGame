@@ -1,11 +1,11 @@
 
-    
+
 $("body").css("background-image", "url('assets/images/trivia.jpg')", "height:900px", "width: 900px");
 $(".container").css("background-image", "url('assets/images/tr.jpg')");
 $('#reset_button').hide();
 var Trivia;
 
-$("#start_button").on("click",function() {
+$("#start_button").on("click", function () {
     $(this).hide();
     $('.result').remove();
     $('#container').text('');//replace co instead of div
@@ -13,15 +13,15 @@ $("#start_button").on("click",function() {
     Trivia.ask();
 });
 
-$('#choices_div').on('click', 'button', function(e) {
+$('#choices_div').on('click', 'button', function (e) {
     var userPick = $(this).data("id"),
         l = Trivia || $(window).trivia(),
         index = l.questions[l.current].correct,  //correct answer index
         correct = l.questions[l.current].choices[index]; //correct answer in choise is the same but oe ssays olace the other the number
-if (userPick === index) {
-        $('#choices_div').text(" Correct!!! The correct answer was!!!!!!: "+ correct).css("color", "blue");
+    if (userPick === index) {
+        $('#choices_div').text(" Correct!!! The correct answer was!!!!!!: " + correct).css("color", "blue");
         l.answer(true);
-       
+
     } else {
         $('#choices_div').text("Wrong Answer! The correct answer was: " + correct).css("color", "red");
         l.answer(false);
@@ -30,11 +30,11 @@ if (userPick === index) {
 });
 
 //make a prototype
-   $.fn.trivia = function() {
- //setting a object = this in the global scope to reference to multiple elements with this chaning value but nebver l
+$.fn.trivia = function () {
+    //setting a object = this in the global scope to reference to multiple elements with this chaning value but nebver l
 
     var l = this;
-   
+
     l.userPick = false;
     //object
     l.answers = {
@@ -68,7 +68,7 @@ if (userPick === index) {
 
     }, {
         question: "what was the real reason the Constitution was made?",
-        choices: ["to give you liberty", "to make laws", "as a contranct between man and goverment", "no idea"],
+        choices: ["to give you liberty", "to make laws", "as a contract between man and goverment", "no idea"],
         correct: 2
 
     }, {
@@ -77,16 +77,16 @@ if (userPick === index) {
         correct: 2
 
     }, {
-        question: "During the ballroom scene of Beauty & the Beast, what color is Belle’s Gown?",
-        choices: ["Yellow", "Blue", "Gold", "White"],
-        correct: 2
+        question: "country with the highest number of world cup championships?",
+        choices: ["Brazil", "USA", "Germany", "italy"],
+        correct: 0
 
     }, {
-        question: "In Bambi, what word does the owl use to describe falling in love?",
-        choices: ["Whimsical", "Miserable", "Joyful", "Twitterpatted"],
-        correct: 3
+        question: "America's debt aprox.?",
+        choices: ["100 million", "15.8 trillion", "22.2 trillion", "1 quadrillion"],
+        correct: 2
     }];
-    l.ask = function() {
+    l.ask = function () {
         //if object 1 and 2 show timer starting at 60 show question starting at incex 0 of questions
         if (l.questions[l.current]) {
             console.log("this  is" + l.questions[l.current]);
@@ -95,14 +95,14 @@ if (userPick === index) {
             var choicesArr = l.questions[l.current].choices;
             var buttonsArr = [];
             console.log("what is this" + choicesArr);
-///for each choise in current question show choices in buttoms
-           for (var i = 0; i < choicesArr.length; i++) {
+            ///for each choise in current question show choices in buttoms
+            for (var i = 0; i < choicesArr.length; i++) {
                 var button = $('<button>');
-               button.text(choicesArr[i]);
-               button.attr('data-id', i);
-            $('#choices_div').append(button);
-           }
-          // set the speed of your timer
+                button.text(choicesArr[i]);
+                button.attr('data-id', i);
+                $('#choices_div').append(button);
+            }
+            // set the speed of your timer
             window.triviaCounter = setInterval(l.timer, 1000);
             //if not answered then unsawered
         } else {
@@ -111,54 +111,55 @@ if (userPick === index) {
                     l.questions.length - (l.answers.correct + l.answers.incorrect)),
                 class: 'result'
             }));
+            $("#timer").stop();
             $('#reset_button').show();
         }
-        $('#reset_button').on('click',function(restart) {
+        $('#reset_button').on('click', function (restart) {
             window.location.reload();
             console.log(restart);
         });//replace cont ins of body
     };
 
-//if get to 0 time out next question
-    l.timer = function() {
+    //if get to 0 time out next question
+    l.timer = function () {
         l.count--;
         if (l.count <= 0) {
-            setTimeout(function() {
-             l.nextQ();
+            setTimeout(function () {
+                l.nextQ();
             });
         } else {
             $("#timer").text("Time remaining: " + "00:" + l.count + " secs");
         }//
     };
 
-    l.nextQ = function() {
+    l.nextQ = function () {
         //moves cquestion on index 1 by one
         l.current++;
         clearInterval(window.triviaCounter);
         l.count = 10;
         $('#timer').text("");
-        setTimeout(function() {
+        setTimeout(function () {
             l.cleanUp();
             l.ask();
         }, 3000)//changed time to view answer to 3secs
     };
     //cleans teh old total corrrect or incorrect answers.
-    l.cleanUp = function() {
-        $('div[id]').each(function(item) {
+    l.cleanUp = function () {
+        $('div[id]').each(function (item) {
             $(this).text('');
         });
-        
+
         $('.correct').html('Correct answers:  ' + l.answers.correct);
         $('.incorrect').html('Incorrect answers: ' + l.answers.incorrect);
     };
-    
-   // set a variabl = to either correct or incorrect the create an object
-    l.answer = function(result) {
-        var guess =  result ? 'correct' : 'incorrect';
+
+    // set a variabl = to either correct or incorrect the create an object
+    l.answer = function (result) {
+        var guess = result ? 'correct' : 'incorrect';
         l.answers[guess]++;//add wrong or right wetger answer is false or truth
         $('.' + guess).text(guess + ' answers: ' + l.answers[guess]);
-        
-    console.log(result);
+
+        console.log(result);
     };
     return l;//
 };
